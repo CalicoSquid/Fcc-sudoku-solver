@@ -29,7 +29,7 @@ class SudokuSolver {
     let boxArray = setArrays(puzzleString)[2]
     row.toUpperCase()
     let currentBox = []
-    boxArray.map(item => {
+    boxArray.map(() => {
       if (row === 'A' || row === 'B' || row === 'C') {
         column <=3 ? currentBox = boxArray[0] : column <=6 ? currentBox = boxArray[1] : currentBox = boxArray[2] 
       } else if (row === 'D' || row === 'E' || row === 'F') {
@@ -38,33 +38,26 @@ class SudokuSolver {
         column <=3 ? currentBox = boxArray[6] : column <=6 ? currentBox = boxArray[7] : currentBox = boxArray[8]
       }
     })
-    console.log(currentBox)
 
-    if(currentBox.includes(value)) {
-      return false
-    } else {
-      return true
-    }
+    return currentBox.includes(value) ? false : true
   }
 
   solve(puzzleString) {
 
-    if (/[^1-9.]/g.test(puzzleString) || puzzleString.length != 81) {
-      console.log(false)
-      return false
-    }
-      let isSolved = !puzzleString.split('').includes('.');
-      let numbers = ['1','2','3','4','5','6','7','8','9'];
-      let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-      let indexCounter = -1;
-      let arrays = setArrays(puzzleString);
-      if (!arrays)  return false
+    if (/[^1-9.]/g.test(puzzleString) || puzzleString.length != 81) return false
+
+    let isSolved = !puzzleString.split('').includes('.');
+    let numbers = ['1','2','3','4','5','6','7','8','9'];
+    let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    let indexCounter = -1;
+    let arrays = setArrays(puzzleString);
+     if (!arrays)  return false
       
-      let rows = arrays[0];
-      let columns = arrays[1];
-      let boxes = arrays[2];
+    let rows = arrays[0];
+    let columns = arrays[1];
+    let boxes = arrays[2];
     
-      if (!isSolved) {
+    if (!isSolved) {
 
         rows.map((row, index1) => {
           let possibleRowNumbers = []
@@ -76,10 +69,10 @@ class SudokuSolver {
           row.map((number, index) => {
 
             indexCounter ++
-            let possibleRowColNumbers = possibleRowNumbers
+            let possibleNumbers = possibleRowNumbers
             if (number == '.') {
               columns[index].map(number => {
-                possibleRowColNumbers = possibleRowColNumbers.filter(e => {
+                possibleNumbers = possibleNumbers.filter(e => {
                   return number !== e
                 })
               })
@@ -88,97 +81,97 @@ class SudokuSolver {
               if (letter === 'A' || letter === 'B' || letter === 'C') {
                 if (index < 3) {
                   boxes[0].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else if (index  < 6) {
                   boxes[1].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else {
                   boxes[2].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 }
               } else if (letter === 'D' || letter === 'E' || letter === 'F') {
                 if (index < 3) {
                   boxes[3].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else if (index  < 6) {
                   boxes[4].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else {
                   boxes[5].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 }
               } else {
                 if (index < 3) {
                   boxes[6].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else if (index  < 6) {
                   boxes[7].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 } else {
                   boxes[8].map(number => {
-                    possibleRowColNumbers = possibleRowColNumbers.filter(e => {
-                      return number !== e
+                    possibleNumbers = possibleNumbers.filter(num => {
+                      return number !== num
                     })
                   })
                 }
               }
               //Add solve logic here
-              if (possibleRowColNumbers.length === 1) {
+              if (possibleNumbers.length === 1) {
                 let answer = puzzleString.split('')
-                answer[indexCounter] = possibleRowColNumbers[0]
+                answer[indexCounter] = possibleNumbers[0]
                 puzzleString = answer.join('')
               } 
             }
-          })  
+          });  
         })
-          return this.solve(puzzleString)          
+          return this.solve(puzzleString);          
       }  
-      return puzzleString
+      return puzzleString;
     }  
 }
 
 const setArrays = (puzzleString) => {
-  let rowsArray = []
-  let colsArray = [ [],[],[],[],[],[],[],[],[] ]
-  let boxArray = [ [],[],[],[],[],[],[],[],[] ]
-  let tempArray = []
-  let count = 1
+  let rowsArray = [];
+  let colsArray = [ [],[],[],[],[],[],[],[],[] ];
+  let boxArray = [ [],[],[],[],[],[],[],[],[] ];
+  let tempArray = [];
+  let count = 1;
   let isDuplicate = false;
   // Populate nested arrays of 9 rows
   puzzleString.split('').map((item, index) => {
-      tempArray.push(item)
+      tempArray.push(item);
         if (count % 9 === 0) {
           if (index != 0) {
           rowsArray.push(tempArray);
-          tempArray = []
-          }      
+          tempArray = [];
+          }  
         }
     count++
-    })
+    });
 
   // Populate nested array or 9 columns
   rowsArray.map(item => {
@@ -193,23 +186,26 @@ const setArrays = (puzzleString) => {
       item.map((item, index) => {
         index < 3 ?
         boxArray[0].push(item) :
-        index > 5 ? boxArray[2].push(item) :
-        boxArray[1].push(item)
+        index < 6 ? 
+        boxArray[1].push(item) :
+        boxArray[2].push(item)
       })
-    } else if (index > 5) {
+    } else if (index < 6) {
       item.map((item, index) => {
         index < 3 ? 
-        boxArray[6].push(item) : 
-        index > 5 ? boxArray[8].push(item) : 
-        boxArray[7].push(item)
+        boxArray[3].push(item) : 
+        index < 6 ? 
+        boxArray[4].push(item) : 
+        boxArray[5].push(item)
       })
     } else {
       item.map((item, index) => {
         index < 3 ? 
-        boxArray[3].push(item) : 
-        index > 5 ? boxArray[5].push(item) : 
-        boxArray[4].push(item)
-      })
+        boxArray[6].push(item) : 
+        index < 6 ? 
+        boxArray[7].push(item) : 
+        boxArray[8].push(item)
+      })    
     }
   })
 
@@ -225,6 +221,7 @@ const setArrays = (puzzleString) => {
       }
     })
   })
+
   // Make sure puzzleString is valid by checking columns for duplicates
   colsArray.map(col => {
     let checkArray = []
@@ -252,6 +249,7 @@ const setArrays = (puzzleString) => {
 
   
   if (isDuplicate) return false
+
   return [rowsArray, colsArray, boxArray]
 }
 
