@@ -1,65 +1,33 @@
 class SudokuSolver {
 
-  validate(puzzleString) {
-    // The validate function should take
-    // a given puzzle string and check it 
-    // to see if it has 81 valid characters for the input.
-    let checkPuzzleString = new RegExp(/^[1-9.]{81}/g)
-    let result = checkPuzzleString.test(puzzleString)
-    if (result) {
-      console.log(result)
-      return true;
-    } else {
-      console.log('Error ' + puzzleString.length)
-      if (puzzleString.length !== 81) {
-        return 'invalid length'
-      } else {
-        return 'invalid'
-      }
-    } 
-  }
-
-
   checkRowPlacement(puzzleString, row, column, value) {
-    // The check functions should be validating against the current state of the board.
     let rowsArray = setArrays(puzzleString)[0]
     let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
-
     let currentRow = rowsArray[letters.indexOf(row.toUpperCase())]
     let square = rowsArray[letters.indexOf(row.toUpperCase())][column - 1]
 
-    console.log("the square is: " + row + column + ". It contains: " + square)
-    if (square === '.') {
-      if(currentRow.includes(value)) {
-        return {type: "row", valid: false}
-      } else {
-        return {type: "row", valid: true}
-      }
-    } else {
-      if (square === value) {
-        return {type: "square", valid: true}
-      } else {
-        return {type: "square", valid: false}
-      }
-    }
+    if (square === '.') return currentRow.includes(value) ? false : true
+  } 
+
+  checkSquarePlacement(puzzleString, row, column, value) {
+    let rowsArray = setArrays(puzzleString)[0]
+    let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+    let square = rowsArray[letters.indexOf(row.toUpperCase())][column - 1]
+
+    if (square !== '.') return square === value ? true : false
+    
   }
 
   checkColPlacement(puzzleString, row, column, value) {
-    // The check functions should be validating against the current state of the board.
     let colsArray = setArrays(puzzleString)[1]
-
     let currentCol = colsArray[column-1]
-    if(currentCol.includes(value)) {
-      return {type: "column", valid: false}
-    } else {
-      return {type: "column", valid: true}
-    }
+
+    return currentCol.includes(value) ? false : true
   }
 
   checkRegionPlacement(puzzleString, row, column, value) {
-    // The check functions should be validating against the current state of the board.
     let boxArray = setArrays(puzzleString)[2]
-    row = row.toUpperCase()
+    row.toUpperCase()
     let currentBox = []
     boxArray.map(item => {
       if (row === 'A' || row === 'B' || row === 'C') {
@@ -73,20 +41,25 @@ class SudokuSolver {
     console.log(currentBox)
 
     if(currentBox.includes(value)) {
-      return {type: "region", valid: false}
+      return false
     } else {
-      return {type: "region", valid: true}
+      return true
     }
   }
 
-
   solve(puzzleString) {
+
+    if (/[^1-9.]/g.test(puzzleString) || puzzleString.length != 81) {
+      console.log(false)
+      return false
+    }
       let isSolved = !puzzleString.split('').includes('.');
       let numbers = ['1','2','3','4','5','6','7','8','9'];
       let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
       let indexCounter = -1;
       let arrays = setArrays(puzzleString);
       if (!arrays)  return false
+      
       let rows = arrays[0];
       let columns = arrays[1];
       let boxes = arrays[2];

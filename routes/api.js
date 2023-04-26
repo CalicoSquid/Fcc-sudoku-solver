@@ -1,5 +1,5 @@
 'use strict';
-const solvent = require('../test.js')
+
 const SudokuSolver = require('../controllers/sudoku-solver.js');
 
 module.exports = function (app) {
@@ -43,33 +43,22 @@ module.exports = function (app) {
       return
      }
 
-     console.log("row = " + row + " column = " + column)
      let conflictArray = []
      let validRow = solver.checkRowPlacement(puzzle, row, column, value)
      let validCol = solver.checkColPlacement(puzzle, row, column, value)
      let validBox = solver.checkRegionPlacement(puzzle, row, column, value)
+     let validSquare = solver.checkSquarePlacement(puzzle, row, column, value)
+     console.log(validSquare);
 
-     if (!validRow.valid) conflictArray.push(validRow.type);
-     if (!validCol.valid) conflictArray.push(validCol.type);
-     if (!validBox.valid) conflictArray.push(validBox.type);   
-      console.log(conflictArray)
-      console.log(validRow)
-
-     if (validRow.valid && validCol.valid && validBox.valid) {
-      return res.json({valid: true})
-     } else if (validRow.type === 'square') {
-      return res.json({valid: validRow.valid})
-     } else {
-      return res.json({valid: false, conflict: conflictArray})
-     }
+     if (!validRow) conflictArray.push('row');
+     if (!validCol) conflictArray.push('column');
+     if (!validBox) conflictArray.push('region');   
 
 
+     return validRow && validCol && validBox ? res.json({valid: true}) : validSquare ? res.json({valid: true}) : res.json({valid: false, conflict: conflictArray})
 
+  })
 
-
-
-    });
-    
   app.route('/api/solve')
  
     .post((req, res) => {
@@ -90,6 +79,7 @@ module.exports = function (app) {
       
       let solved = solver.solve(puzzle)
       if (solved) {
+        console.log(solved)
         res.json({solution: solved})
       }
       else {
