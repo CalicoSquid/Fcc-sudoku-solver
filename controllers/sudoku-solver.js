@@ -1,5 +1,5 @@
 class SudokuSolver {
-
+  // Check for valid row placement
   checkRowPlacement(puzzleString, row, column, value) {
     let rowsArray = setArrays(puzzleString)[0]
     let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -8,7 +8,7 @@ class SudokuSolver {
 
     if (square === '.') return currentRow.includes(value) ? false : true
   } 
-
+  // Check for valid square placement
   checkSquarePlacement(puzzleString, row, column, value) {
     let rowsArray = setArrays(puzzleString)[0]
     let letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
@@ -17,14 +17,14 @@ class SudokuSolver {
     if (square !== '.') return square === value ? true : false
     
   }
-
+  // Check for valid column placement
   checkColPlacement(puzzleString, row, column, value) {
     let colsArray = setArrays(puzzleString)[1]
     let currentCol = colsArray[column-1]
 
     return currentCol.includes(value) ? false : true
   }
-
+  // Check for valid region placement
   checkRegionPlacement(puzzleString, row, column, value) {
     let boxArray = setArrays(puzzleString)[2]
     row.toUpperCase()
@@ -41,7 +41,7 @@ class SudokuSolver {
 
     return currentBox.includes(value) ? false : true
   }
-
+  // Solve the puzzle!
   solve(puzzleString) {
 
     if (/[^1-9.]/g.test(puzzleString) || puzzleString.length != 81) return false
@@ -153,7 +153,7 @@ class SudokuSolver {
       return puzzleString;
     }  
 }
-
+// Function to set row, column and region arrays for puzzle logic
 const setArrays = (puzzleString) => {
   let rowsArray = [];
   let colsArray = [ [],[],[],[],[],[],[],[],[] ];
