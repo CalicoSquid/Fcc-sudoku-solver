@@ -7,14 +7,22 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link id="favicon" rel="icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon">
+  <link id="favicon" rel="icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon">
 	<link rel="stylesheet" href="../public/style.css" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato&family=Raleway:wght@600&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
 	<header>
 		<h1>Sudoku Solver</h1>
 	</header>
+  <p class="sub">Puzzle logic written by <a href="https://www.freecodecamp.org/CalicoSquid">CalicoSquid</a></p>
 	<div class="container">
 		<div class="form-container">
 			<form id="solve-form">
@@ -29,10 +37,11 @@
         <div id="error-msg"></div>
         </form>
         <form id="check-form">
-          <p>Coordinate (A1): <input id="coord" class="checker" type="text" name="coordinate"></p>
-          <p>Value (1-9): <input class="checker" type="text" id="val" name="value"></p>
+          <p>Coordinate: <input id="coord" class="checker" type="text" name="coordinate" placeholder="A1"></p>
+          <p>Value: <input class="checker" type="text" id="val" name="value" placeholder="1"></p>
           <input type="button" id="check-button" value="Check Placement">
         </form>
+        <br>
         <span id="error"></span>
       </div>
       
@@ -350,6 +359,43 @@
         </div>
       </div>
     </div>
+    <div class="container lower">
+      <h2>Sample Puzzle Strings</h2>
+      <ul>
+        <li>
+          <p onclick="copy(this.innerHTML)">1.5..2.84..63.12.7.2..5.....9..1....8.2.3674.3.7.2..9.47...8..1..16....926914.37.</p>
+        </li>
+        <li>
+          <p onclick="copy(this.innerHTML)">5..91372.3...8.5.9.9.25..8.68.47.23...95..46.7.4.....5.2.......4..8916..85.72...3</p>
+        </li>
+        <li>
+          <p onclick="copy(this.innerHTML)">..839.7.575.....964..1.......16.29846.9.312.7..754.....62..5.78.8...3.2...492...1</p>
+        </li>
+        <li>
+          <p onclick="copy(this.innerHTML)">.7.89.....5....3.4.2..4..1.5689..472...6.....1.7.5.63873.1.2.8.6..47.1..2.9.387.6</p>
+        </li>
+        <li>
+          <p onclick="copy(this.innerHTML)">82..4..6...16..89...98315.749.157.............53..4...96.415..81..7632..3...28.51</p>
+        </li>
+      </ul>
+    </div>
   </body>
+  <script>
+    let copy = (data) => {
+      document.getElementById("text-input").value = data
+      let len = data.length < 81 ? data.length : 81;
+      for (let i = 0; i < len; i++) {
+      let rowLetter = String.fromCharCode('A'.charCodeAt(0) + Math.floor(i / 9));
+      let col = (i % 9) + 1; 
+      if (!data[i] || data[i] === ".") {
+        document.getElementsByClassName(rowLetter + col)[0].innerText = " ";
+        continue;
+      }
+      document.getElementsByClassName(rowLetter + col)[0].innerText = data[i];
+    }
+    return;
+  }
+  </script>
   <script type="module" src="../public/index.js"></script>
+  
 </html>

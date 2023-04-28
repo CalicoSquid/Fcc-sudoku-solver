@@ -1,19 +1,90 @@
+
+:root {
+  --white: #f0f0f0;
+  --black: #000;
+  --orange-1: #eb9414;
+  --orange-2: #8b4000;
+  --orange-3: #ff7a00;
+  --gray: #303841;
+  --dark-gray: #252b31;
+}
+
+@font-face {
+  font-family: 'Yeseva One';
+  src: url('YesevaOne-Regular.eot');
+  src: url('YesevaOne-Regular.eot?#iefix') format('embedded-opentype'),
+      url('YesevaOne-Regular.woff2') format('woff2'),
+      url('YesevaOne-Regular.woff') format('woff'),
+      url('YesevaOne-Regular.ttf') format('truetype'),
+      url('YesevaOne-Regular.svg#YesevaOne-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  font-family: Lato , sans-serif;
+  box-sizing: border-box;
+}
+
 code {
   background: #d0d0d5;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgb(110,104,89);
+  background: linear-gradient(0deg, rgba(110,104,89,1) 0%, rgba(37,43,49,1) 100%);
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  background-color: #f0f0f0;
+  box-shadow: 0 0 10px #f0f0f0;
+}
+
+h1 {
+  font-family: 'Yeseva One', Raleway, sans-serif;
+  font-size: 3rem;
+}
+
+h2 {
+  font-family: 'Yeseva One', Raleway, sans-serif;
+}
+
+.sub {
+  color: var(--white);
+}
+
+.sub a {
+  text-decoration: none;
+  color: var(--orange-3);
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  width: 80%;
+  padding: 20px;
 }
 
+
 .form-container {
-  max-width: 95%;
+  max-width: 100%;
   align-self: flex-start;
 }
 
 textarea {
   width: 100%;
+  height: 100px;
+  padding: 5px;
 }
 
 #user-stories {
@@ -26,10 +97,10 @@ textarea {
   margin-left: 10px;
 }
 
+
 #sudoku-grid-container {
   display: flex;
   flex-direction: row;
-  margin-left: 20px;
 }
 
 #sudoku-grid {
@@ -40,15 +111,17 @@ textarea {
 .grid {
   border: 3px solid;
   border-spacing: 0;
+  background-color:#fff;
 }
 
 td {
   border: 1px solid;
   padding: 0.3em;
+  
 }
 
 .yAxisLegend {
-  margin-top: 50px;
+  margin-top: 35px;
   text-align: right;
   font-weight: bold;
 }
@@ -91,6 +164,27 @@ td {
 
 .A3, .B3, .C3, .D3, .E3, .F3, .G3, .H3, .I3, .A6, .B6, .C6, .D6, .E6, .F6, .G6, .H6, .I6 {
   border-right: 3px solid;
+}
+
+.lower {
+  display: block;
+  text-align: center;
+}
+
+.lower > ul {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.lower p {
+  cursor: pointer;
+  word-wrap: break-word;
+}
+
+.lower p:hover {
+  color: var(--orange-3);
+  font-weight: bold;
 }
 
 @media (min-width: 800px) {
